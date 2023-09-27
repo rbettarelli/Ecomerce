@@ -1,29 +1,20 @@
-import { Container, Paper, Grid, Typography, Button, TextField, List, ListItem, ListItemText, makeStyles } from '@material-ui/core/';
-import { BrowserRouter as Router} from 'react-router-dom';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: '5px',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center'
-  },
-}));
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
+import MainRoutes from "./routes.js";
+import { Container } from "@material-ui/core/";
+import Header from "./components/Header.js";
 
 const App = () => {
-  const classes = useStyles();
-
-  return(
-
-    <Router> 
-
-      
-    </Router>
-    
-  )
-}
+  return (
+    <Provider>
+      <Container maxWidth="xl">
+        <Router>
+          <Header />
+          <MainRoutes />
+        </Router>
+      </Container>
+    </Provider>
+  );
+};
 
 export default App;
