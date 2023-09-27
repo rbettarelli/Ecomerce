@@ -1,12 +1,13 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
+import store from "./components/store";
 import MainRoutes from "./routes.js";
 import { Container } from "@material-ui/core/";
 import Header from "./components/Header.js";
 
 const App = () => {
   return (
-    <Provider>
+    <Provider store={store}>
       <Container maxWidth="xl">
         <Router>
           <Header />

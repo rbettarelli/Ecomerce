@@ -2,13 +2,14 @@ import {
   Paper,
   Grid,
   Typography,
-  Button,
+
   List,
-  ListItem,
-  ListItemText,
+  
+ 
   makeStyles,
 } from "@material-ui/core/";
-import React, {useState} from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import Item from "../components/Item";
 import Card from "../components/Card";
 const useStyles = makeStyles((theme) => ({
@@ -23,9 +24,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Homepage = () => {
+  const products = useSelector((state) => state.products);
   const classes = useStyles();
 
+  const categories = products.map((category) => {
+    const container = {};
+    container["id"] = category.id_categorys;
+    container["name"] = category.name_categorys;
+    return container;
+  });
+  const category = categories
+    .map(JSON.stringify)
+    .filter(function (item, index, arr) {
+      return arr.indexOf(item, index + 1) === -1;
+    })
+    .map(JSON.parse);
 
+    const arrayCategory = categories.map(category => category.name)
+    let count = {}
+
+    for(let i = 0; i < arrayCategory.length; i++){
+      {
+        let key = arrayCategory[i]
+        count[key] = (count[key] ? count[key] + 1 : 1)
+      }
+    }
 
   return (
     <Grid container spacing={3} className={classes.root}>
@@ -33,20 +56,34 @@ const Homepage = () => {
         <Paper className={classes.paper}>
           <Typography variant="h5">Categorias</Typography>
           <List>
-            <Item  name="Times Nacionais" details="3" />
-            <Item  name="Times Nacionais" details="3" />
-            <Item  name="Times Nacionais" details="3" />
+            {category.map((item) => {
+              return (
+                <Item
+                  key={item.id}
+                  name={item.name}
+                  details={count[item.name]}
+                />
+              );
+            })}
           </List>
         </Paper>
       </Grid>
-      <Card name="Flamengo 2020" price="99.99" image="./images/produtos/fla.jpg"/>
-      <Card name="Flamengo 2020" price="99.99" image="./images/produtos/alemanha.jpg"/>
-      <Card name="Flamengo 2020" price="99.99" image="./images/produtos/arsenal.jpg"/>
-      <Card name="Flamengo 2020" price="99.99" image="./images/produtos/milan.jpg"/>
-      <Card name="Flamengo 2020" price="99.99" image="./images/produtos/palmeiras.jpg"/>
-      <Card name="Flamengo 2020" price="99.99" image="./images/produtos/brasil94.jpg "/>
+      {products.map((item) => {
+        return (
+          <Card
+            key={item.id_product}
+            product={item}
+            
+          >
+            {" "}
+            {item.name_product}{" "}
+          </Card>
+        );
+      })}
     </Grid>
   );
 };
 
-export default Homepage;
+
+
+export default (Homepage);
