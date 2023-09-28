@@ -17,6 +17,9 @@ const Cart = () => {
     
     }
 }
+if(cart.value > 0) {
+    localStorage.setItem("shopping: cart", JSON.stringify(cart))
+}
 
   return (
     <>
